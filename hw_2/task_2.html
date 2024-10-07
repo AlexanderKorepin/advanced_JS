@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" class="review">
+    <button type="submit" class="btn">Добавить отзыв</button>
+    <div class="msg"></div>
+    <script>
+        const initialData = [
+    {
+        product: "Apple iPhone 13",
+        reviews: [
+            {
+                id: "1",
+                text: "Отличный телефон! Батарея держится долго.",
+            },
+            {
+                id: "2",
+                text: "Камера супер, фото выглядят просто потрясающе.",
+            },
+        ],
+    },
+    {
+        product: "Samsung Galaxy Z Fold 3",
+        reviews: [
+            {
+                id: "3",
+                text: "Интересный дизайн, но дорогой.",
+            },
+        ],
+    },
+    {
+        product: "Sony PlayStation 5",
+        reviews: [
+            {
+                id: "4",
+                text: "Люблю играть на PS5, графика на высоте.",
+            },
+        ],
+    },
+];
+        const btn = document.querySelector('.btn');
+        const review = document.querySelector('.review');
+        const msg = document.querySelector('.msg');
+        initialData.forEach(product => {
+            const p = document.createElement('p');
+            product.reviews.forEach(review => {
+                p.textContent = `${product.product}, ${review.text}`
+                msg.appendChild(p);
+            })
+        })
+        btn.addEventListener('click', () => {
+            const p = document.createElement('p');
+            if(review.value.length < 50 || review.value.length > 500) {
+                throw `Отзыв должен содержать от 50 до 500 символов`;;
+            }
+            p.textContent = `${review.value}`
+            msg.appendChild(p); 
+        });
+    </script>
+</body>
+</html>
