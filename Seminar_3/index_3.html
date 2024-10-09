@@ -1,0 +1,80 @@
+<!-- Задание 3 (тайминг 35 минут)
+Создать интерактивную веб-страницу, где пользователи могут выбирать различные элементы мебели
+(например, столы, стулья, диваны) и их параметры (материал, цвет, стиль). Выбранные параметры должны
+быть сохранены так, чтобы при повторном посещении сайта пользователь мог видеть свой ранее собранный
+комплект мебели.
+1. Пользователи могут выбирать из различных типов мебели (например, столы, стулья, диваны).
+2. Для каждого типа мебели доступен выбор параметров (цвет, материал, стиль).
+3. Предусмотреть кнопку "Сохранить комплект", при нажатии на которую текущий выбор пользователя
+сохраняется в localStorage.
+4. При повторном посещении сайта автоматически загружать сохраненные параметры из localStorage и
+отображать ранее созданный комплект.
+5. Предусмотреть возможность для пользователя очистить сохраненные настройки через специальную
+кнопку.
+6. После нажатия на кнопку "Сохранить" на странице должен отображаться выбранный комплект.
+7. При нажатии на кнопку "Очистить" должно появляться сообщение о том, что выбор не сделан и
+предыдущие настройки удалены. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task_3</title>
+</head>
+<body>
+    <div>
+        <label for="table">Выберите стол:</label>
+        <select id="table">
+        <option value="Дуб">Дуб</option>
+        <option value="Сосна">Сосна</option>
+        <option value="Орех">Орех</option>
+        </select>
+        </div>
+        <div>
+        <label for="chair">Выберите стул:</label>
+        <select id="chair">
+        <option value="Кожа">Кожа</option>
+        <option value="Ткань">Ткань</option>
+        <option value="Пластик">Пластик</option>
+        </select>
+        </div>
+        <div>
+        <label for="sofa">Выберите диван:</label>
+        <select id="sofa">
+        <option value="Современный">Современный</option>
+        <option value="Классический">Классический</option>
+        <option value="Деревенский">Деревенский</option>
+        </select>
+        </div>
+        <button id="save">Сохранить выбор</button>
+        <button id="clear">Очистить</button>
+        <div id="result"></div>
+    <script>
+        const table = document.querySelector('#table');
+        const chair = document.querySelector('#chair');
+        const sofa = document.querySelector('#sofa');
+        const save = document.querySelector('#save');
+        const clear = document.querySelector('#clear');
+        const result = document.querySelector('#result');
+        save.addEventListener('click', () => {
+            localStorage.setItem('table', table.value);
+            localStorage.setItem('chair', chair.value);
+            localStorage.setItem('sofa', sofa.value);
+            tableValue = table.value;
+            chairValue = chair.value;
+            sofaValue = sofa.value;
+            result.textContent = `Ваш комплект: стол ${localStorage.getItem('table')}, стул ${localStorage.getItem('chair')}, диван ${localStorage.getItem('sofa')}`;
+        });
+        clear.addEventListener('click', () => {
+            localStorage.clear();
+            result.textContent = ``;
+        });
+        if(localStorage.getItem('table')) {
+            result.textContent = `Ваш комплект: стол ${localStorage.getItem('table')}, стул ${localStorage.getItem('chair')} , диван ${localStorage.getItem('sofa')}`;
+        }
+        
+    </script>
+    </body>
+    </html>
+    
+        

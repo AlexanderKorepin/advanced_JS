@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавление отзывов</title>
+</head>
+
+<body>
+    <menu>
+        <a href="index.html">На главную</a>
+        <a href="remove.html">Просмотр отзывов</a>
+    </menu>
+    <content>
+    <h1>Добавление отзывов</h1>
+    <input type="text" class="product" placeholder="Введите название продукта">
+    <input type="text" class="review" placeholder="Введите отзыв">
+    <button type="submit" class="btn">Добавить отзыв</button>
+    <div class="msg"></div>
+    </content>
+    <script>
+        const btn = document.querySelector('.btn');
+        const product = document.querySelector('.product');
+        const review = document.querySelector('.review');
+        const msg = document.querySelector('.msg');
+        
+        btn.addEventListener('click', () => {
+            let reviews = JSON.parse(localStorage.getItem(product.value)) || [];
+            reviews.push(review.value);
+            localStorage.setItem(product.value, JSON.stringify(reviews));
+            msg.textContent = `Добавлен отзыв о ${product.value}`;
+            product.value = '';
+            review.value = '';
+        });
+    </script>
+</body>
+
+</html>

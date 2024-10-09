@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button class="btn">Загрузка новостей</button>
+    <div class="news"></div>
+    <script>
+       
+        const btn = document.querySelector('.btn');
+        const newContainer = document.querySelector('.news');
+        const mockDatabase = [
+        { title: "News 1", content: "Lorem ipsum dolor sit amet" },
+        { title: "News 2", content: "Consectetur adipiscing elit" },
+        ]
+        function fetchNews() {
+            return new Promise((resolve, reject) => {
+            setTimeout(() => {
+            if (Math.random () > 0.5) {
+                resolve(mockDatabase);
+            } else {
+                reject("Ошибка загрузки новостей");
+            }
+        }, 2000);
+    });
+}
+btn.addEventListener('click', () =>  {
+    fetchNews()
+        .then(data => {
+                data.forEach(news => {
+                    const newsP = document.createElement("p");
+                    newsP.textContent = news.content;
+                    const newsh = document.createElement("h2");
+                    newsh.textContent = news.title;
+                    newContainer.appendChild(newsh);
+                    newContainer.appendChild(newsP);
+
+                });
+            })
+        .catch(error => {
+            newContainer.textContent = `Ошибка: ${error}`;
+            })
+    }
+)
+    </script>
+</body>
+</html>

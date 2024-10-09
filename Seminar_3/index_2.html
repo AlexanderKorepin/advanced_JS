@@ -1,0 +1,55 @@
+<!-- Задание 2 (тайминг 25 минут)
+Создать интерактивную веб-страницу, где пользователи могут вводить текст, сохранять его в localStorage,
+а затем загружать или удалять сохраненные данные.
+Разработка Интерфейса:
+Создать HTML-страницу с:
+● Одним текстовым полем для ввода данных пользователем.
+● Тремя кнопками: "Сохранить", "Загрузить" и "Очистить".
+● Местом для отображения сохраненного текста.
+Программирование Логики на JavaScript:
+1. При нажатии на "Сохранить", введенный текст должен сохраняться в localStorage.
+2. При нажатии на "Загрузить", текст из localStorage должен отображаться на странице.
+3. При нажатии на "Очистить", сохраненный текст должен быть удален из localStorage, и соответствующее
+сообщение отображается на странице. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" class="note">
+    <button type="submit" class="save">Сохранить</button>
+    <button type="submit" class="load">Загрузить</button>
+    <button type="submit" class="clean">Стереть</button>
+    <div class="list">
+    </div>
+    <script>
+        const note = document.querySelector('.note');
+        const save = document.querySelector('.save');
+        const load = document.querySelector('.load');
+        const clean = document.querySelector('.clean');
+        const list = document.querySelector('.list');
+        save.addEventListener('click', () => {
+            localStorage.setItem( new Date(), note.value);
+            alert('Данные сохранены');
+        });
+        load.addEventListener('click', () => {
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    const li = document.createElement('li');
+                    li.textContent = localStorage[key] ? localStorage[key] :'введите текст';
+                    list.appendChild(li);
+                }
+            }
+        });
+        clean.addEventListener('click', () => {
+            localStorage.clear();
+            const liList = list.querySelectorAll('li');
+            liList.forEach(li => li.remove());
+            alert('Данные удалены!');
+        });
+    </script>
+</body>
+</html>

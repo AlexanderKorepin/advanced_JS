@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр отзывов</title>
+</head>
+<body>
+    <menu>
+        <a href="index.html">На главную</a>
+        <a href="add.html">Добавить отзыв</a>
+    </menu>
+    <content>
+        <h1>Просмотр отзывов</h1>
+        <h2>Продукты</h2>
+        <div class="products"></div>
+        <h2>Отзывы</h2>
+        <ol class="reviews"></ol>
+    </content>
+    <script>
+    const products = document.querySelector('.products');
+    const reviews = document.querySelector('.reviews');
+
+    for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        const h4 = document.createElement('h4');
+        h4.textContent = '- ' + key;
+        products.appendChild(h4);
+        h4.addEventListener('click', () => {
+            reviews.innerHTML = '';
+            const reviewsList = JSON.parse(localStorage.getItem(key)) || [];
+            reviewsList.forEach(review => {
+                const li = document.createElement('li');
+                const btn = document.createElement('button');
+                btn.textContent = 'удалить';
+                li.textContent = review + ' ';
+                li.appendChild(btn);
+                reviews.appendChild(li);
+                btn.addEventListener('click', () => {
+                    reviews.removeChild(li);
+                    const reviewsList = JSON.parse(localStorage.getItem(key)) || [];
+                    reviewsList.splice(reviewsList.indexOf(review), 1);
+                    localStorage.setItem(key, JSON.stringify(reviewsList));
+                    if (reviewsList.length === 0) {
+                        localStorage.removeItem(key);
+                        products.removeChild(h4);
+                    }
+                });
+            });
+        });
+    }
+    </script>
+</body>
+</html>

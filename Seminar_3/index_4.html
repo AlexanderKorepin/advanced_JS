@@ -1,0 +1,83 @@
+<!-- //         Задание 4* (тайминг 55 минут)
+// Создать интерактивную веб-страницу, которая позволяет пользователям регистрироваться и входить в
+// систему, используя данные, сохраненные в LocalStorage.
+// Приложение будет состоять из трёх основных страниц:
+// 1. Страница регистрации:
+// ○ Предлагает пользователю ввести логин и пароль.
+// ○ После ввода данных, они сохраняются в LocalStorage.
+// ○ Пользователь перенаправляется на страницу входа.
+// 2. Страница входа:
+// ○ Предлагает пользователю ввести логин и пароль.
+// ○ Если введенные данные совпадают с данными из LocalStorage, пользователь перенаправляется
+// на страницу приветствия.
+// ○ Если данные не совпадают, выводится сообщение об ошибке.
+// 3. Страница приветствия:
+// ○ Простое приветственное сообщение для авторизованного пользователя.
+// ○ Кнопка "Выйти", при нажатии на которую пользователь возвращается на страницу входа. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task_4</title>
+</head>
+<body>
+    <div>
+        <h1>Регистрация</h1>
+        <input type="text" id="login" placeholder="Логин" required>
+        <input type="password" id="password" placeholder="Пароль" required>
+        <button id="registration">Зарегистрироваться</button>
+        <button id="loginBtn">Войти</button>
+    </div>
+    <div id="result"></div>
+    <script>
+        const registration = document.querySelector('#registration');
+        const loginBtn = document.querySelector('#loginBtn');
+        const login = document.querySelector('#login');
+        const password = document.querySelector('#password');
+        const result = document.querySelector('#result');
+        
+        registration.addEventListener('click', () => {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = {
+                login: login.value,
+                password: password.value
+            };
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+            result.textContent = 'Регистрация прошла успешно!';
+        });
+        
+        loginBtn.addEventListener('click', () => {
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = {
+                login: login.value,
+                password: password.value
+            };
+            const index = users.findIndex(u => u.login === user.login && u.password === user.password);
+            if (index!== -1) {
+                result.textContent = 'Вход успешен!';
+                setTimeout(() => {
+                    window.location.href = 'welcome.html';
+                }, 2000);
+            } else {
+                result.textContent = 'Неверный логин или пароль!';
+            }
+        });
+        
+        // Страница приветствия
+        const logoutBtn = document.querySelector('#logout');
+        logoutBtn.addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+        
+        // Если пользователь уже авторизован, перенаправляем на страницу приветствия
+        if (localStorage.getItem('users')) {
+            window.location.href = 'welcome.html';
+        }
+
+        
+    </script>
+</body>
+</html>
